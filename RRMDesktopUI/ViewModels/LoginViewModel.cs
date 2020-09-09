@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using RRMDesktopUI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,12 @@ namespace RRMDesktopUI.ViewModels
     public class LoginViewModel : Screen
     {
         private string _userName;
+        private IAPIHelper _apiHelper;
+
+        public LoginViewModel(IAPIHelper apiHelper)
+        {
+            _apiHelper = apiHelper;
+        }
 
         public string UserName
         {
@@ -46,9 +53,16 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
-        public void Login()
+        public async Task Login()
         {
-            Console.WriteLine("hello");
+            try
+            {
+                var result = await _apiHelper.Authenticate(UserName, Password);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
