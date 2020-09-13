@@ -53,15 +53,38 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
+
+        public bool IsErrorVisible
+        {
+            get => ErrorMessage?.Length > 0;
+        }
+
+        private string _ErrorMessage;
+
+        public string ErrorMessage
+        {
+            get { return _ErrorMessage; }
+            set 
+            {
+                _ErrorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorVisible);
+            }
+        }
+
+
+
         public async Task Login()
         {
             try
             {
+                ErrorMessage = null;
                 var result = await _apiHelper.Authenticate(UserName, Password);
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ErrorMessage = ex.Message;
             }
         }
     }
