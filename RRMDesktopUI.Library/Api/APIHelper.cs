@@ -1,4 +1,4 @@
-﻿using RRMDesktopUI.Models;
+﻿using RRMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,15 +9,19 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RRMDesktopUI.Helpers
+namespace RRMDesktopUI.Library.Api
 {
     public class APIHelper : IAPIHelper
     {
         private HttpClient apiClient { get; set; }
+        public ILoggedInUserModel LoggedInUser { get; set; }
 
-        public APIHelper()
+
+        public APIHelper(ILoggedInUserModel loggedInUser)
         {
             InitializeClient();
+
+            LoggedInUser = loggedInUser;
         }
 
         private void InitializeClient()
@@ -49,6 +53,33 @@ namespace RRMDesktopUI.Helpers
                     return result;
                 }
                 throw new Exception(response.ReasonPhrase);
+            }
+        }
+
+        public async Task GetLoggedInUserInfo(string token)
+        {
+            apiClient.DefaultRequestHeaders.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            apiClient.DefaultRequestHeaders.Add("Authorization", $"bearer {token}");
+
+            using (var response = await apiClient.GetAsync("/api/User"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<LoggedInUserModel>();
+                    LoggedInUser.Token = token;
+                    LoggedInUser.FirstName = result.FirstName;
+                    LoggedInUser.LastName = result.LastName;
+                    LoggedInUser.EmailAddress = result.EmailAddress;
+                    LoggedInUser.CreateDate = result.CreateDate;
+                    LoggedInUser.Id = result.Id;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+                
             }
         }
     }
