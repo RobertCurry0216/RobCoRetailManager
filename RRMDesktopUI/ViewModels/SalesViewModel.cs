@@ -11,6 +11,7 @@ namespace RRMDesktopUI.ViewModels
     public class SalesViewModel : Screen
     {
         #region Properties
+
         private BindingList<string> _products;
 
         public BindingList<string> Products
@@ -34,9 +35,9 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
-        private string _itemQuantity;
+        private int _itemQuantity;
 
-        public string ItemQuantity
+        public int ItemQuantity
         {
             get { return _itemQuantity; }
             set { 

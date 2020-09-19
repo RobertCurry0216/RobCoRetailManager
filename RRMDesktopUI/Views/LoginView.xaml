@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RRMDesktopUI.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="410" d:DesignWidth="760"
+             d:DesignHeight="500" d:DesignWidth="400"
              Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,15 +35,15 @@
 
         <TextBlock Grid.Row="2" Grid.Column="1"
                    Margin="5"
-                   Text="UserName:" FontSize="24" FontFamily="Segoe UI Light"/>
-        <TextBox x:Name="UserName" Grid.Row="2" Grid.Column="2" FontSize="24"
-                   MinWidth="350" Margin="5,5,0,5" Padding="10 0" MaxWidth="450"/>
+                   Text="UserName:" FontSize="12" FontFamily="Segoe UI Light"/>
+        <TextBox x:Name="UserName" Grid.Row="2" Grid.Column="2" FontSize="12"
+                   MinWidth="150" Margin="5,5,0,5" Padding="10 0" MaxWidth="450"/>
 
         <TextBlock Grid.Row="3" Grid.Column="1"
                    Margin="5"
-                   Text="Password:" FontSize="24" FontFamily="Segoe UI Light"/>
-        <PasswordBox x:Name="Password" Grid.Row="3" Grid.Column="2" FontSize="24"
-                   MinWidth="350" Margin="5,5,0,5" Padding="10 0" MaxWidth="450"/>
+                   Text="Password:" FontSize="12" FontFamily="Segoe UI Light"/>
+        <PasswordBox x:Name="Password" Grid.Row="3" Grid.Column="2" FontSize="12"
+                   MinWidth="150" Margin="5,5,0,5" Padding="10 0" MaxWidth="450"/>
 
         <Button x:Name="Login" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" Content="Login"
