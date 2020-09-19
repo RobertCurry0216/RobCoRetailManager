@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using RRMDesktopUI.EventModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,26 @@ using System.Threading.Tasks;
 
 namespace RRMDesktopUI.ViewModels
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : Conductor<object>, IHandle<LoginEvent>
     {
-        private LoginViewModel loginVM;
+        private IEventAggregator _events;
+        private SimpleContainer _container;
+        private SalesViewModel salesVM;
 
-        public ShellViewModel( LoginViewModel login )
+        public ShellViewModel(IEventAggregator events, SalesViewModel sales, SimpleContainer container )
         {
-            loginVM = login;
-            ActivateItem(loginVM);
+            _container = container;
+            _events = events;
+            _events.Subscribe(this);
+
+            salesVM = sales;
+
+            ActivateItem(_container.GetInstance<LoginViewModel>());
+        }
+
+        public void Handle(LoginEvent message)
+        {
+            ActivateItem(salesVM);
         }
     }
 }
