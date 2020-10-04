@@ -29,7 +29,13 @@
         <TextBlock Text="Items" Grid.Column="0" Grid.Row="1"/>
         <TextBlock Text="Cart" Grid.Column="2" Grid.Row="1"/>
 
-        <ListBox x:Name="Products" Grid.Row="2" Grid.Column="0" MinHeight="100" MinWidth="100" BorderThickness="1" BorderBrush="LightGray"/>
+        <ListBox x:Name="Products" Grid.Row="2" Grid.Column="0" MinHeight="100" MinWidth="100" BorderThickness="1" BorderBrush="LightGray">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2" Margin="20 0">
             <TextBlock Text="Quantity" />
@@ -38,7 +44,8 @@
             <Button x:Name="RemoveFromCart" Content="Remove from cart" Padding="5"/>
         </StackPanel>
 
-        <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="2" MinHeight="100" MinWidth="100" BorderThickness="1" BorderBrush="LightGray"/>
+        <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="2" MinHeight="100" MinWidth="100" BorderThickness="1" BorderBrush="LightGray">
+        </ListBox>
 
         <DockPanel Grid.Column="2" Grid.Row="3">
             <TextBlock Text="SubTotal:" Margin="0 0 5 0" />

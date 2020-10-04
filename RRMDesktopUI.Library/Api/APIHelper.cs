@@ -14,7 +14,7 @@ namespace RRMDesktopUI.Library.Api
     public class APIHelper : IAPIHelper
     {
         private HttpClient apiClient { get; set; }
-        public ILoggedInUserModel LoggedInUser { get; set; }
+        private ILoggedInUserModel LoggedInUser { get; set; }
 
 
         public APIHelper(ILoggedInUserModel loggedInUser)
@@ -23,6 +23,12 @@ namespace RRMDesktopUI.Library.Api
 
             LoggedInUser = loggedInUser;
         }
+
+        public HttpClient ApiClient
+        {
+            get { return apiClient; }
+        }
+
 
         private void InitializeClient()
         {
