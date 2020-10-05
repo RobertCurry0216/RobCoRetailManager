@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using RRMDesktopUI.Library.Api;
+using RRMDesktopUI.Library.Helpers;
 using RRMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace RRMDesktopUI.ViewModels
     public class SalesViewModel : Screen
     {
         IProductEndPoint productEndPoint;
+        IConfigHelper ConfigHelper;
 
-        public SalesViewModel(IProductEndPoint productEndPoint)
+        public SalesViewModel(IProductEndPoint productEndPoint, IConfigHelper configHelper)
         {
             this.productEndPoint = productEndPoint;
+            ConfigHelper = configHelper;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -83,30 +86,39 @@ namespace RRMDesktopUI.ViewModels
 
         public string SubTotal
         {
-            get {
-                decimal subTotal = 0;
-                foreach (var item in Cart)
-                {
-                    subTotal += item.Product.RetailPrice * item.QuantityInCart;
-                }
-
-                return subTotal.ToString("C");
+            get
+            {
+                return CalculateSubTotal().ToString("C");
             }
+        }
+
+        private decimal CalculateSubTotal()
+        {
+            return Cart.Sum(i => i.Product.RetailPrice * i.QuantityInCart);
         }
 
         public string Tax
         {
             get
             {
-                return "0";
+                return CalculateTax().ToString("C");
             }
+        }
+
+        private decimal CalculateTax()
+        {
+            decimal taxRate = ConfigHelper.GetTaxRate() / 100;
+            return Cart
+                .Where(i => i.Product.IsTaxable)
+                .Sum(i => i.Product.RetailPrice * i.QuantityInCart * taxRate);
         }
 
         public string Total
         {
             get
             {
-                return "0";
+                var total = CalculateSubTotal() + CalculateTax();
+                return total.ToString("C")  ;
             }
         }
 
@@ -132,8 +144,7 @@ namespace RRMDesktopUI.ViewModels
             if (existingItem != null)
             {
                 existingItem.QuantityInCart += ItemQuantity;
-                Cart.Remove(existingItem);
-                Cart.Add(existingItem); 
+                Cart.ResetBindings();
             }
             else
             {
@@ -149,6 +160,8 @@ namespace RRMDesktopUI.ViewModels
             SelectedProduct.QuantityInStock -= ItemQuantity;
             ItemQuantity = 1;
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total);
         }
 
         public bool CanRemoveFromCart
@@ -162,10 +175,11 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
-
         public void RemoveFromCart()
         {
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total);
         }
 
         public bool CanCheckOut
@@ -178,7 +192,6 @@ namespace RRMDesktopUI.ViewModels
                 return output;
             }
         }
-
 
         public void CheckOut()
         {
