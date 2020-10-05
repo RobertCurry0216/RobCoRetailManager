@@ -21,7 +21,7 @@ namespace RRMDataManager.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("EfData", throwIfV1Schema: false)
         {
         }
         
