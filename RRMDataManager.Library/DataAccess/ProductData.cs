@@ -18,5 +18,14 @@ namespace RRMDataManager.Library.DataAccess
 
             return output;
         }
+
+        public ProductModel GetProductById(int productId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var output = sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetById", new { id = productId }, "RRMData").FirstOrDefault();
+
+            return output;
+        }
     }
 }

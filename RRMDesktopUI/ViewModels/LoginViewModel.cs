@@ -13,7 +13,8 @@ namespace RRMDesktopUI.ViewModels
 {
     public class LoginViewModel : Screen
     {
-        private string _userName;
+        //TODO: remove hardcoded values at a later date.
+        private string _userName = "abc@email.com";
         private IAPIHelper _apiHelper;
         private IEventAggregator _events;
 
@@ -33,7 +34,7 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
-        private string _password;
+        private string _password = "123456789";
 
         public string Password
         {

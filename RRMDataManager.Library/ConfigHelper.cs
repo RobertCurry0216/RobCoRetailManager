@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RRMDesktopUI.Library.Helpers
+namespace RRMDataManager.Library
 {
-    public class ConfigHelper : IConfigHelper
+    public class ConfigHelper
     {
-        public decimal GetTaxRate()
+        public static decimal GetTaxRate()
         {
             // TODO: Move this to the Api
             string rateText = ConfigurationManager.AppSettings["TaxRate"];
