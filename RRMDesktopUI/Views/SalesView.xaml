@@ -52,7 +52,7 @@
             <Button x:Name="RemoveFromCart" Content="Remove from cart" Padding="5"/>
         </StackPanel>
 
-        <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="2" MinHeight="100" MinWidth="100" BorderThickness="1" BorderBrush="LightGray">
+        <ListBox x:Name="Cart" SelectedItem="{Binding SelectedCartItem}" Grid.Row="2" Grid.Column="2" MinHeight="100" MinWidth="100" BorderThickness="1" BorderBrush="LightGray">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayText}"/>
