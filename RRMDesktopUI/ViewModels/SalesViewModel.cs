@@ -4,22 +4,19 @@ using RRMDesktopUI.Library.Api;
 using RRMDesktopUI.Library.Helpers;
 using RRMDesktopUI.Library.Models;
 using RRMDesktopUI.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RRMDesktopUI.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        IProductEndPoint productEndPoint;
-        IConfigHelper configHelper;
-        ISaleEndPoint saleEndPoint;
-        IMapper mapper;
+        private IProductEndPoint productEndPoint;
+        private IConfigHelper configHelper;
+        private ISaleEndPoint saleEndPoint;
+        private IMapper mapper;
 
         public SalesViewModel(IProductEndPoint productEndPoint, IConfigHelper configHelper, ISaleEndPoint saleEndPoint, IMapper mapper)
         {
@@ -49,7 +46,8 @@ namespace RRMDesktopUI.ViewModels
         public BindingList<ProductDisplayModel> Products
         {
             get { return _products; }
-            set { 
+            set
+            {
                 _products = value;
                 NotifyOfPropertyChange(() => Products);
             }
@@ -60,7 +58,8 @@ namespace RRMDesktopUI.ViewModels
         public ProductDisplayModel SelectedProduct
         {
             get { return selectedProduct; }
-            set { 
+            set
+            {
                 selectedProduct = value;
                 NotifyOfPropertyChange(() => SelectedProduct);
                 NotifyOfPropertyChange(() => CanAddToCart);
@@ -97,7 +96,8 @@ namespace RRMDesktopUI.ViewModels
         public int ItemQuantity
         {
             get { return _itemQuantity; }
-            set { 
+            set
+            {
                 _itemQuantity = value;
                 NotifyOfPropertyChange(() => ItemQuantity);
                 NotifyOfPropertyChange(() => CanAddToCart);
@@ -138,17 +138,18 @@ namespace RRMDesktopUI.ViewModels
             get
             {
                 var total = CalculateSubTotal() + CalculateTax();
-                return total.ToString("C")  ;
+                return total.ToString("C");
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region button methods
 
         public bool CanAddToCart
         {
-            get {
+            get
+            {
                 var output = false;
                 if (ItemQuantity > 0 && selectedProduct?.QuantityInStock >= ItemQuantity)
                 {
@@ -237,7 +238,7 @@ namespace RRMDesktopUI.ViewModels
             var sale = new SaleModel();
             foreach (var item in Cart)
             {
-                sale.SaleDetails.Add(new SaleDetailModel() 
+                sale.SaleDetails.Add(new SaleDetailModel()
                 {
                     ProductId = item.Product.Id,
                     Quantity = item.QuantityInCart,
@@ -247,6 +248,6 @@ namespace RRMDesktopUI.ViewModels
             await saleEndPoint.PostSale(sale);
         }
 
-        #endregion
+        #endregion button methods
     }
 }

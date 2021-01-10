@@ -9,8 +9,6 @@ using RRMDesktopUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,7 +17,7 @@ namespace RRMDesktopUI
     public class Bootstrapper : BootstrapperBase
     {
         private SimpleContainer _container = new SimpleContainer();
-        
+
         public Bootstrapper()
         {
             Initialize();
@@ -63,7 +61,6 @@ namespace RRMDesktopUI
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .ToList()
                 .ForEach(vmt => _container.RegisterPerRequest(vmt, vmt.ToString(), vmt));
-                
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

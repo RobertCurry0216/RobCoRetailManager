@@ -2,11 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RRMDesktopUI.Library.Api
@@ -15,7 +12,6 @@ namespace RRMDesktopUI.Library.Api
     {
         private HttpClient apiClient { get; set; }
         private ILoggedInUserModel LoggedInUser { get; set; }
-
 
         public APIHelper(ILoggedInUserModel loggedInUser)
         {
@@ -28,7 +24,6 @@ namespace RRMDesktopUI.Library.Api
         {
             get { return apiClient; }
         }
-
 
         private void InitializeClient()
         {
@@ -85,7 +80,6 @@ namespace RRMDesktopUI.Library.Api
                 {
                     throw new Exception(response.ReasonPhrase);
                 }
-                
             }
         }
     }

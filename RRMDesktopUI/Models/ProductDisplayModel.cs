@@ -15,13 +15,12 @@ namespace RRMDesktopUI.Models
         public int QuantityInStock
         {
             get { return _QuantityInStock; }
-            set 
-            { 
+            set
+            {
                 _QuantityInStock = value;
                 CallPropertyChanged(nameof(QuantityInStock));
             }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

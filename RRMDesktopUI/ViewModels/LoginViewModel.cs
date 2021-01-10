@@ -1,12 +1,7 @@
 ﻿using Caliburn.Micro;
 using RRMDesktopUI.EventModels;
-using RRMDesktopUI.Helpers;
 using RRMDesktopUI.Library.Api;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RRMDesktopUI.ViewModels
@@ -15,6 +10,7 @@ namespace RRMDesktopUI.ViewModels
     {
         //TODO: remove hardcoded values at a later date.
         private string _userName = "abc@email.com";
+
         private IAPIHelper _apiHelper;
         private IEventAggregator _events;
 
@@ -27,7 +23,8 @@ namespace RRMDesktopUI.ViewModels
         public string UserName
         {
             get { return _userName; }
-            set { 
+            set
+            {
                 _userName = value;
                 NotifyOfPropertyChange(() => UserName);
                 NotifyOfPropertyChange(() => CanLogin);
@@ -39,7 +36,8 @@ namespace RRMDesktopUI.ViewModels
         public string Password
         {
             get { return _password; }
-            set { 
+            set
+            {
                 _password = value;
                 NotifyOfPropertyChange(() => Password);
                 NotifyOfPropertyChange(() => CanLogin);
@@ -58,7 +56,6 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
-
         public bool IsErrorVisible
         {
             get => ErrorMessage?.Length > 0;
@@ -69,15 +66,13 @@ namespace RRMDesktopUI.ViewModels
         public string ErrorMessage
         {
             get { return _ErrorMessage; }
-            set 
+            set
             {
                 _ErrorMessage = value;
                 NotifyOfPropertyChange(() => ErrorMessage);
                 NotifyOfPropertyChange(() => IsErrorVisible);
             }
         }
-
-
 
         public async Task Login()
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RRMDesktopUI.Library.Models
+﻿namespace RRMDesktopUI.Library.Models
 {
     public class CartItemModel
     {
@@ -15,6 +9,5 @@ namespace RRMDesktopUI.Library.Models
         {
             get { return $"{QuantityInCart} :   {Product.Name}"; }
         }
-
     }
 }

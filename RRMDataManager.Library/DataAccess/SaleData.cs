@@ -3,8 +3,6 @@ using RRMDataManager.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RRMDataManager.Library.DataAccess
 {
@@ -16,11 +14,12 @@ namespace RRMDataManager.Library.DataAccess
             //start filling in models to be saved to the database
             var details = new List<SaleDetailDBModel>();
             var products = new ProductData();
-            var taxRate = ConfigHelper.GetTaxRate()/100;
+            var taxRate = ConfigHelper.GetTaxRate() / 100;
 
             foreach (var item in saleInfo.SaleDetails)
             {
-                var detail = new SaleDetailDBModel {
+                var detail = new SaleDetailDBModel
+                {
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
                 };
@@ -57,8 +56,7 @@ namespace RRMDataManager.Library.DataAccess
             sql.SaveData("dbo.spSale_Insert", sale, "RRMData");
 
             //get the id from the sale model
-            sale.Id = sql.LoadData<int, dynamic>("spSale_Lookup", new {CashierId = sale.CashierId, SaleDate = sale.SaleDate }, "RRMData").FirstOrDefault();
-
+            sale.Id = sql.LoadData<int, dynamic>("spSale_Lookup", new { CashierId = sale.CashierId, SaleDate = sale.SaleDate }, "RRMData").FirstOrDefault();
 
             //finish filling it the sale model
             foreach (var item in details)
@@ -68,7 +66,6 @@ namespace RRMDataManager.Library.DataAccess
                 //save the sale detail models
                 sql.SaveData("dbo.spSaleDetail_Insert", item, "RRMData");
             }
-
         }
     }
 }

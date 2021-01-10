@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace RRMDesktopUI.Models
 {
@@ -16,8 +11,8 @@ namespace RRMDesktopUI.Models
         public int QuantityInCart
         {
             get { return _QuantityInCart; }
-            set 
-            { 
+            set
+            {
                 _QuantityInCart = value;
                 CallPropertyChanged(nameof(QuantityInCart));
                 CallPropertyChanged(nameof(DisplayText));

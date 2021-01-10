@@ -1,9 +1,7 @@
 ﻿using RRMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RRMDesktopUI.Library.Api
@@ -11,6 +9,7 @@ namespace RRMDesktopUI.Library.Api
     public class ProductEndPoint : IProductEndPoint
     {
         private IAPIHelper apiHelper;
+
         public ProductEndPoint(IAPIHelper apiHelper)
         {
             this.apiHelper = apiHelper;

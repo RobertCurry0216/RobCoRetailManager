@@ -7,7 +7,9 @@ namespace RRMDesktopUI.Library.Api
     public interface IAPIHelper
     {
         Task<AuthenticatedUser> Authenticate(string username, string password);
+
         Task GetLoggedInUserInfo(string token);
+
         HttpClient ApiClient { get; }
     }
 }

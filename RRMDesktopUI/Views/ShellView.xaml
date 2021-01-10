@@ -7,17 +7,16 @@
         mc:Ignorable="d"
         Title="ShellView" Height="550" Width="450">
     <DockPanel>
-        <Menu DockPanel.Dock="Top" 
+        <Menu DockPanel.Dock="Top"
               FontSize="18">
             <MenuItem Header="_File">
-                    
             </MenuItem>
             <MenuItem Header="_Account">
-                <MenuItem x:Name="LoginScreen" Header="_Log in"/>
+                <MenuItem x:Name="LoginScreen" Header="_Log in" />
             </MenuItem>
         </Menu>
         <Grid>
-            <ContentControl x:Name="ActiveItem" Margin="10"/>
+            <ContentControl x:Name="ActiveItem" Margin="10" />
         </Grid>
     </DockPanel>
 </Window>
