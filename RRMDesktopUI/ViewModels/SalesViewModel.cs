@@ -1,7 +1,9 @@
-﻿using Caliburn.Micro;
+﻿using AutoMapper;
+using Caliburn.Micro;
 using RRMDesktopUI.Library.Api;
 using RRMDesktopUI.Library.Helpers;
 using RRMDesktopUI.Library.Models;
+using RRMDesktopUI.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,12 +19,14 @@ namespace RRMDesktopUI.ViewModels
         IProductEndPoint productEndPoint;
         IConfigHelper configHelper;
         ISaleEndPoint saleEndPoint;
+        IMapper mapper;
 
-        public SalesViewModel(IProductEndPoint productEndPoint, IConfigHelper configHelper, ISaleEndPoint saleEndPoint)
+        public SalesViewModel(IProductEndPoint productEndPoint, IConfigHelper configHelper, ISaleEndPoint saleEndPoint, IMapper mapper)
         {
             this.productEndPoint = productEndPoint;
             this.configHelper = configHelper;
             this.saleEndPoint = saleEndPoint;
+            this.mapper = mapper;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -34,14 +38,15 @@ namespace RRMDesktopUI.ViewModels
         private async Task LoadProducts()
         {
             var productList = await productEndPoint.GetAll();
-            Products = new BindingList<ProductModel>(productList);
+            var mappedProducts = mapper.Map<List<ProductDisplayModel>>(productList);
+            Products = new BindingList<ProductDisplayModel>(mappedProducts);
         }
 
         #region Properties
 
-        private BindingList<ProductModel> _products;
+        private BindingList<ProductDisplayModel> _products;
 
-        public BindingList<ProductModel> Products
+        public BindingList<ProductDisplayModel> Products
         {
             get { return _products; }
             set { 
@@ -50,9 +55,9 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
-        private ProductModel selectedProduct;
+        private ProductDisplayModel selectedProduct;
 
-        public ProductModel SelectedProduct
+        public ProductDisplayModel SelectedProduct
         {
             get { return selectedProduct; }
             set { 
@@ -62,9 +67,9 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
-        private BindingList<CartItemModel> _cart = new BindingList<CartItemModel>();
+        private BindingList<CartItemDisplayModel> _cart = new BindingList<CartItemDisplayModel>();
 
-        public BindingList<CartItemModel> Cart
+        public BindingList<CartItemDisplayModel> Cart
         {
             get { return _cart; }
             set
@@ -146,11 +151,11 @@ namespace RRMDesktopUI.ViewModels
             if (existingItem != null)
             {
                 existingItem.QuantityInCart += ItemQuantity;
-                Cart.ResetBindings();
+                //Cart.ResetBindings();
             }
             else
             {
-                var cartItem = new CartItemModel()
+                var cartItem = new CartItemDisplayModel()
                 {
                     Product = SelectedProduct,
                     QuantityInCart = ItemQuantity,
