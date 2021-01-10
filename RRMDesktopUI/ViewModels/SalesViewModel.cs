@@ -67,6 +67,19 @@ namespace RRMDesktopUI.ViewModels
             }
         }
 
+        private CartItemDisplayModel selectedCartItem;
+
+        public CartItemDisplayModel SelectedCartItem
+        {
+            get { return selectedCartItem; }
+            set
+            {
+                selectedCartItem = value;
+                NotifyOfPropertyChange(() => selectedCartItem);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
+            }
+        }
+
         private BindingList<CartItemDisplayModel> _cart = new BindingList<CartItemDisplayModel>();
 
         public BindingList<CartItemDisplayModel> Cart
@@ -151,7 +164,6 @@ namespace RRMDesktopUI.ViewModels
             if (existingItem != null)
             {
                 existingItem.QuantityInCart += ItemQuantity;
-                //Cart.ResetBindings();
             }
             else
             {
@@ -177,7 +189,10 @@ namespace RRMDesktopUI.ViewModels
             get
             {
                 bool output = false;
-
+                if (selectedCartItem != null)
+                {
+                    output = true;
+                }
 
                 return output;
             }
@@ -185,6 +200,17 @@ namespace RRMDesktopUI.ViewModels
 
         public void RemoveFromCart()
         {
+            SelectedCartItem.Product.QuantityInStock++;
+
+            if (SelectedCartItem.QuantityInCart > 1)
+            {
+                SelectedCartItem.QuantityInCart--;
+            }
+            else
+            {
+                Cart.Remove(SelectedCartItem);
+            }
+
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);

@@ -30,7 +30,7 @@ namespace RRMDesktopUI
             "PasswordChanged");
         }
 
-        protected override void Configure()
+        private IMapper ConfigureAutomapper()
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -40,7 +40,12 @@ namespace RRMDesktopUI
 
             var mapper = config.CreateMapper();
 
-            _container.Instance(mapper);
+            return mapper;
+        }
+
+        protected override void Configure()
+        {
+            _container.Instance(ConfigureAutomapper());
 
             _container.Instance(_container)
                 .PerRequest<IProductEndPoint, ProductEndPoint>()
